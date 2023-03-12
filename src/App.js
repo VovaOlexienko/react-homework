@@ -2,6 +2,8 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import React, {Component} from "react";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import ProductPage from "./components/ProductPage";
 
 class App extends Component {
 
@@ -89,13 +91,20 @@ class App extends Component {
 
     render() {
         return (
-            <div className="bg-light">
-                <Header basket={this.state.basket} categories={this.state.categories}
-                        selectCategory={this.selectCategory}/>
-                <Body categoryId={this.state.categoryId} products={this.state.products}
-                      categories={this.state.categories} addToBasket={this.addToBasket}/>
-                <Footer/>
-            </div>
+            <BrowserRouter>
+                <div className="bg-light">
+                    <Header basket={this.state.basket} categories={this.state.categories}
+                            selectCategory={this.selectCategory}/>
+                    <Routes>
+                        <Route path="" element={<Body categoryId={this.state.categoryId} products={this.state.products}
+                                                      categories={this.state.categories}
+                                                      addToBasket={this.addToBasket}/>}/>
+                        <Route path="/product/:id" element={<ProductPage products={this.state.products}
+                                                                         categories={this.state.categories}/>}/>
+                    </Routes>
+                    <Footer/>
+                </div>
+            </BrowserRouter>
         );
     }
 }

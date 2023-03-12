@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import CardProduct from "./CardProduct";
+import {Link} from "react-router-dom";
 
 class Body extends Component {
 
@@ -26,6 +27,10 @@ class Body extends Component {
         return this.props.categories.filter(category => category.id === this.props.categoryId)[0];
     }
 
+    scrollUp = () => {
+        window.scroll(0, 0);
+    }
+
     render() {
         return (
             <div className="album">
@@ -39,10 +44,13 @@ class Body extends Component {
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         {this.props.products
                             .filter(product => this.props.categoryId === null || product.categoryId === this.props.categoryId)
-                            .map(product => <CardProduct key={product.id} product={product}
-                                                         addToBasket={this.props.addToBasket}
-                                                         incrementVisibleProductsNumber={this.incrementVisibleProductsNumber}
-                                                         decrementVisibleProductsNumber={this.decrementVisibleProductsNumber}/>)}
+                            .map(product => <Link to={`product/${product.id}`} onClick={this.scrollUp}
+                                                  className="text-decoration-none"
+                                                  style={{color: "inherit"}}><CardProduct key={product.id}
+                                                                                          product={product}
+                                                                                          addToBasket={this.props.addToBasket}
+                                                                                          incrementVisibleProductsNumber={this.incrementVisibleProductsNumber}
+                                                                                          decrementVisibleProductsNumber={this.decrementVisibleProductsNumber}/></Link>)}
                     </div>
                 </div>
             </div>
